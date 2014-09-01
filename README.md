@@ -11,3 +11,5 @@ Im planning to create the following features.
 * Join Channels
 * User list
 * Private message to users
+
+### [Todo list](https://github.com/RolfKoenders/nirc/blob/master/TODO.md)
