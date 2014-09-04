@@ -1,0 +1,26 @@
+{
+  "name": "nirc",
+  "version": "0.0.0",
+  "description": "As a side project i want to create a [IRC](http://nl.wikipedia.org/wiki/Internet_Relay_Chat) client as webapp.  Im going to use [Ember](emberjs.com) for the frontend. To start with a bit of styling [Bootstrap](http://getbootstrap.com/).  The server part will be written in NodeJS. The communication between the front -and backend will be through sockets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RolfKoenders/nirc.git"
+  },
+  "keywords": [
+    "nirc",
+    "irc"
+  ],
+  "author": "Rolf Koenders <rolfkoenders@gmail.com> (http://rolfkoenders.nl/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RolfKoenders/nirc/issues"
+  },
+  "homepage": "https://github.com/RolfKoenders/nirc",
+  "dependencies": {
+    "nirc-lib": "0.0.0"
+  }
+}
