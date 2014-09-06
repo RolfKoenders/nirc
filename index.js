@@ -18,7 +18,6 @@ var con = new IRCConnection({
     realname: 'Rolf',
     ident: 'rolf'
 });
-con.connect();
 
 // NIRC-Lib events
 con.on('connected', function(data) {
@@ -40,7 +39,13 @@ ws.on('connection', function(ws) {
     socket = ws;
     ws.on('message', function(message) {
         var data = JSON.parse(message);
-        con.emit(data.text);
+        if(data.type === 'cmd') {
+            if(data.cmd === 'connect') {
+                con.connect();
+            }
+
+            con.emit(data.cmd);
+        }
         console.log(data);
     });
 });
@@ -52,4 +57,3 @@ http.createServer(function(request, response) {
         publicFolder.serve(request, response);
     }).resume();
 }).listen(4000);
-

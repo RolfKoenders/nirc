@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     var list = $("#messages");
 
-    var socket = new WebSocket('ws://localhost:4001'); 
+    var socket = new WebSocket('ws://localhost:4001');
     socket.onopen = function(evt) {
         console.log('Connected to WebSocket');
 
@@ -24,16 +24,26 @@ $(document).ready(function() {
         }
     };
 
-  
-    var button = $("#send-btn");
-    var message = $("#message");  
-    var msg = message.value;
-    button.click(function() {
+    var sendButton = $("#send-btn");
+    var connectButton = $("#connect-btn");
+    var message = $("#message");
+
+    sendButton.click(function() {
+        var msg = message.val();
+        console.log(msg);
+        if(msg === 'list') {
+            socket.send(JSON.stringify({
+                type: 'cmd',
+                cmd: 'list'
+            }));
+        }
+    });
+
+    connectButton.click(function() {
         socket.send(JSON.stringify({
-            type: 'message',
-            text: msg
+            type: 'cmd',
+            cmd: 'connect'
         }));
     });
 
 });
-
