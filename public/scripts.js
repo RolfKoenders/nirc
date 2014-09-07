@@ -6,13 +6,6 @@ $(document).ready(function() {
     var socket = new WebSocket('ws://localhost:4001');
     socket.onopen = function(evt) {
         console.log('Connected to WebSocket');
-
-        setTimeout(function() {
-            socket.send(JSON.stringify({
-                type: 'message',
-                text: 'This is a sample message'
-            }));
-        }, 5000);
     };
 
     socket.onmessage = function(event) {
@@ -34,7 +27,7 @@ $(document).ready(function() {
         if(msg === 'list') {
             socket.send(JSON.stringify({
                 type: 'cmd',
-                cmd: 'list'
+                cmd: 'LIST'
             }));
         }
     });

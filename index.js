@@ -1,5 +1,6 @@
 var http = require('http');
 var nstatic = require('node-static');
+var EventParser = require('./lib/eventParser');
 
 // Setup WebSocketServer
 var WebSocketServer = require('ws').Server;
@@ -37,14 +38,17 @@ con.on('data', function(data) {
 ws.on('connection', function(ws) {
     console.log('Client connected');
     socket = ws;
+
     ws.on('message', function(message) {
         var data = JSON.parse(message);
         if(data.type === 'cmd') {
             if(data.cmd === 'connect') {
                 con.connect();
+                return;
             }
 
-            con.emit(data.cmd);
+            console.log('SEND event to lib ' + data);
+            con.emit('cmd', data.cmd);
         }
         console.log(data);
     });
