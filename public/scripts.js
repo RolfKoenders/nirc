@@ -19,8 +19,8 @@ $(document).ready(function() {
         console.log(event);
         var data = JSON.parse(event.data);
         if (event.type === 'message') {
-            console.log(data.message);
-            list.append("<li>" + data.message + "</li>");
+            
+            list.append("<li>" + data.message.replace(/(\r\n|\n|\r)/gm, "<br>") + "</li>");
         }
     };
 
