@@ -24,7 +24,7 @@ $(document).ready(function() {
     sendButton.click(function() {
         var msg = message.val();
         console.log(msg);
-        if(msg === 'list') {
+        if(msg === '/list') {
             socket.send(JSON.stringify({
                 type: 'cmd',
                 cmd: 'LIST'
