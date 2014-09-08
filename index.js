@@ -1,6 +1,6 @@
 var http = require('http');
 var nstatic = require('node-static');
-var EventParser = require('./lib/eventParser');
+//var EventParser = require('./lib/eventParser');
 
 // Setup WebSocketServer
 var WebSocketServer = require('ws').Server;
