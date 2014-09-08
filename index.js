@@ -48,6 +48,7 @@ ws.on('connection', function(ws) {
             }
 
             console.log('SEND event to lib ' + data);
+            console.log(data.cmd);
             con.emit('cmd', data.cmd);
         }
         console.log(data);

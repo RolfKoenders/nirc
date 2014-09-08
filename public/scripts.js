@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
 
-    var list = $("#messages");
-
+    var consoleWindow = $("#console-messages");
+    
     var socket = new WebSocket('ws://localhost:4001');
     socket.onopen = function(evt) {
         console.log('Connected to WebSocket');
@@ -12,8 +12,7 @@ $(document).ready(function() {
         console.log(event);
         var data = JSON.parse(event.data);
         if (event.type === 'message') {
-            
-            list.append("<li>" + data.message.replace(/(\r\n|\n|\r)/gm, "<br>") + "</li>");
+            consoleWindow.append("<li>" + data.message + "</li>");
         }
     };
 
@@ -21,17 +20,50 @@ $(document).ready(function() {
     var connectButton = $("#connect-btn");
     var message = $("#message");
 
-    sendButton.click(function() {
+    function send() {
         var msg = message.val();
         console.log(msg);
-        if(msg === '/list') {
-            socket.send(JSON.stringify({
-                type: 'cmd',
-                cmd: 'LIST'
-            }));
+
+        var test = /^\/\w+/.exec(msg.toString());
+        if(test) {
+            var send = {};
+            send.type = 'cmd';
+
+            switch(test[0]) {
+                case "/list" :
+                    send.cmd = 'LIST';
+                    break;
+                case "/join" :
+                    var result = /(^\/\w+) (#.\w+)\s?(\w*)/.exec(msg.toString());
+                    console.log(result);
+                    send.cmd = 'JOIN ' + result[2] + ' ' + (result[3] ? result[3] : '');
+                    addChannelTab(result[2]);
+                    break;
+            }
+            console.log(send);
+            socket.send(JSON.stringify(send));
         }
+        message.val('');
+    }
+
+    function addChannelTab(channel) {
+        var tabs = $('.nav-tabs');
+        var tabPanes = $('.tab-content');
+
+        tabs.append('<li class=""><a href="'+channel+'" role="tab" data-toggle="tab">'+channel+'</a></li>'); 
+        tabPanes.append('<div class="tab-pane" id="'+channel.substring(1)+'"> <ul class="messages" id="'+channel+'-messages"></ul>'); 
+    }
+
+    sendButton.click(function() {
+        send();
     });
 
+    message.keyup(function(e) {
+        if(e.keyCode == 13) {
+            send();
+        }
+    });
+ 
     connectButton.click(function() {
         socket.send(JSON.stringify({
             type: 'cmd',

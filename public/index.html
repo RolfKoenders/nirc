@@ -12,7 +12,7 @@
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
-            #messages { height: 635px; list-style-type: none; overflow-y: scroll; }
+            .messages { height: 635px; list-style-type: none; overflow-y: scroll; }
             #message { display: inline-block; width: 90%; }
             #send-btn { display: inline-block; float: right; }
         </style>
@@ -43,12 +43,12 @@
                   <li><a id="connect-btn" href="#">Connect</a></li>
                 </ul>
             </li>
-            <li>
+            <!--<li>
                 <a href="#" data-toggle="modal" data-target="#addServerModal">
                   <span class="glyphicon glyphicon glyphicon-plus"></span>
                   Connect new server
                 </a>
-            </li>
+            </li> -->
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -56,9 +56,18 @@
 
     <div class="container">
 
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#console" role="tab" data-toggle="tab">console</a></li>
+        </ul>
+
         <div class="jumbotron">
-            <ul id="messages">
-            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="console">
+                    <ul class="messages" id="console-messages">
+                    </ul>
+                </div>
+            </div>
+                
             <div class="form-group">
                 <input type="input" class="form-control" id="message">
                 <button type="button" class="btn btn-primary" id="send-btn">Send</button>
