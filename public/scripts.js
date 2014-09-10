@@ -1,6 +1,9 @@
 
 $(document).ready(function() {
 
+    var sendButton = $("#send-btn");
+    var connectButton = $("#connect-btn");
+    var message = $("#message");
     var consoleWindow = $("#console-messages");
     
     var socket = new WebSocket('ws://localhost:4001');
@@ -12,23 +15,34 @@ $(document).ready(function() {
         console.log(event);
         var data = JSON.parse(event.data);
         if (event.type === 'message') {
+            // For now, always put everything in console window
             consoleWindow.append("<li>" + data.message + "</li>");
+            consoleWindow.scrollTop(consoleWindow[0].scrollHeight);
+            readMessage(event.data);
         }
     };
 
-    var sendButton = $("#send-btn");
-    var connectButton = $("#connect-btn");
-    var message = $("#message");
+    function addMessageToTab(msg) { 
+        var channel = $('ul[id="' + msg.channel + '-messages"]');
+        channel.append("<li> &lt;" + msg.from + "&gt;: " + msg.message + "</li>");
+        channel.scrollTop(channel[0].scrollHeight);
+    }
+
+    function readMessage(data) {
+        var data = JSON.parse(data);
+        if(data.command === 'PRIVMSG') {
+            addMessageToTab(data.msg);
+        }
+    }
 
     function send() {
         var msg = message.val();
         console.log(msg);
 
         var test = /^\/\w+/.exec(msg.toString());
+        var send = {};
         if(test) {
-            var send = {};
             send.type = 'cmd';
-
             switch(test[0]) {
                 case "/list" :
                     send.cmd = 'LIST';
@@ -39,10 +53,24 @@ $(document).ready(function() {
                     send.cmd = 'JOIN ' + result[2] + ' ' + (result[3] ? result[3] : '');
                     addChannelTab(result[2]);
                     break;
+                default: 
+                    break;
             }
-            console.log(send);
-            socket.send(JSON.stringify(send));
+        } else {
+            send.type = 'cmd';
+            var activeChannel = $('.nav-tabs').find('.active').children('a').text();
+            send.cmd = 'PRIVMSG ' + activeChannel + ' :'+ msg;
+            
+            addMessageToTab({
+                channel: activeChannel,
+                from: 'RolfTest',
+                message: msg
+            });
         }
+
+        console.log(send);
+        socket.send(JSON.stringify(send));
+
         message.val('');
     }
 

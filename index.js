@@ -26,11 +26,10 @@ con.on('connected', function(data) {
 });
 
 con.on('data', function(data) {
+    data.type = 'message';
+
     if(socket) {
-        socket.send(JSON.stringify({
-            type: 'message',
-            message: data.toString()
-        }));
+        socket.send(JSON.stringify(data));    
     }
 });
 
