@@ -66,11 +66,9 @@ $(document).ready(function() {
                     from: 'RolfTest',
                     message: msg
                 });
+                socket.send(JSON.stringify(send));
             }
         }
-
-        console.log(send);
-        socket.send(JSON.stringify(send));
 
         message.val('');
     }
