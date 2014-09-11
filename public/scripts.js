@@ -59,13 +59,14 @@ $(document).ready(function() {
         } else {
             send.type = 'cmd';
             var activeChannel = $('.nav-tabs').find('.active').children('a').text();
-            send.cmd = 'PRIVMSG ' + activeChannel + ' :'+ msg;
-            
-            addMessageToTab({
-                channel: activeChannel,
-                from: 'RolfTest',
-                message: msg
-            });
+            if(activeChannel != 'console') {
+                send.cmd = 'PRIVMSG ' + activeChannel + ' :'+ msg;
+                addMessageToTab({
+                    channel: activeChannel,
+                    from: 'RolfTest',
+                    message: msg
+                });
+            }
         }
 
         console.log(send);
