@@ -66,10 +66,10 @@ $(document).ready(function() {
                     from: 'RolfTest',
                     message: msg
                 });
-                socket.send(JSON.stringify(send));
             }
         }
 
+        socket.send(JSON.stringify(send));
         message.val('');
     }
 
