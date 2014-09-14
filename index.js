@@ -25,7 +25,6 @@ con.on('connected', function(data) {
 });
 
 con.on('data', function(data) {
-    data.type = 'message';
     if(socket) {
         socket.send(JSON.stringify(data));    
     }
@@ -36,7 +35,7 @@ ws.on('connection', function(ws) {
     socket = ws;
     ws.on('message', function(message) {
         var data = JSON.parse(message);
-        if(data.type === 'cmd') {
+        if(data.cmd) {
             if(data.cmd === 'connect') {
                 con.connect();
                 return;
@@ -44,7 +43,7 @@ ws.on('connection', function(ws) {
 
             console.log('SEND event to lib ' + data);
             console.log(data.cmd);
-            con.emit('cmd', data.cmd);
+            con.emit('cmd', data);
         }
         console.log(data);
     });

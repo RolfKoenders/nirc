@@ -1,6 +1,8 @@
 
 $(document).ready(function() {
 
+    var connectedToServer = false;
+
     var sendButton = $("#send-btn");
     var connectButton = $("#connect-btn");
     var message = $("#message");
@@ -50,6 +52,7 @@ $(document).ready(function() {
                 case "/join" :
                     var result = /(^\/\w+) (#.\w+)\s?(\w*)/.exec(msg.toString());
                     console.log(result);
+                    send.type = 'JOIN';
                     send.cmd = 'JOIN ' + result[2] + ' ' + (result[3] ? result[3] : '');
                     addChannelTab(result[2]);
                     break;
@@ -88,7 +91,7 @@ $(document).ready(function() {
     function removeChannelTab(channel) {
         $('.nav-tabs')
             .children('li')
-            .children('a:contains("#icemobile")')
+            .children('a:contains("'+channel+'")')
             .remove();
         $('.tab-content')
             .find(channel)
@@ -109,12 +112,15 @@ $(document).ready(function() {
     }
 
     sendButton.click(function() {
-        send();
+        if(connectedToServer)
+            send();
     });
 
     message.keyup(function(e) {
         if(e.keyCode == 13) {
-            send();
+            if(connectedToServer) {
+                send();
+            }
         }
     });
  
@@ -123,6 +129,9 @@ $(document).ready(function() {
             type: 'cmd',
             cmd: 'connect'
         }));
+       
+        // For now this is enough. Later we need to check if actually connected.
+        connectedToServer = true;
     });
 
 });
