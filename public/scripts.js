@@ -53,12 +53,24 @@ $(document).ready(function() {
                     send.cmd = 'JOIN ' + result[2] + ' ' + (result[3] ? result[3] : '');
                     addChannelTab(result[2]);
                     break;
+                case "/names" :
+                    var channel = ActiveChannel();
+                    send.cmd = 'NAMES ' + channel;
+                    break;
+
+                case "/leave" :
+                    var channel = ActiveChannel();
+                    if(channel != 'console') {
+                        send.cmd = 'PART ' + channel;
+                        removeChannelTab(channel);
+                    }
+                    break;
                 default: 
                     break;
             }
         } else {
             send.type = 'cmd';
-            var activeChannel = $('.nav-tabs').find('.active').children('a').text();
+            var activeChannel = ActiveChannel();
             if(activeChannel != 'console') {
                 send.cmd = 'PRIVMSG ' + activeChannel + ' :'+ msg;
                 addMessageToTab({
@@ -73,12 +85,27 @@ $(document).ready(function() {
         message.val('');
     }
 
+    function removeChannelTab(channel) {
+        $('.nav-tabs')
+            .children('li')
+            .children('a:contains("#icemobile")')
+            .remove();
+        $('.tab-content')
+            .find(channel)
+            .remove();
+    }
+
     function addChannelTab(channel) {
         var tabs = $('.nav-tabs');
         var tabPanes = $('.tab-content');
 
         tabs.append('<li class=""><a href="'+channel+'" role="tab" data-toggle="tab">'+channel+'</a></li>'); 
         tabPanes.append('<div class="tab-pane" id="'+channel.substring(1)+'"> <ul class="messages" id="'+channel+'-messages"></ul>'); 
+    }
+
+    function ActiveChannel() {
+        var activeChannel = $('.nav-tabs').find('.active').children('a').text();
+        return activeChannel;
     }
 
     sendButton.click(function() {
