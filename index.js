@@ -22,12 +22,10 @@ var con = new IRCConnection({
 
 // NIRC-Lib events
 con.on('connected', function(data) {
-    console.log('Connected');
 });
 
 con.on('data', function(data) {
     data.type = 'message';
-
     if(socket) {
         socket.send(JSON.stringify(data));    
     }
@@ -35,9 +33,7 @@ con.on('data', function(data) {
 
 // WebSocket Events
 ws.on('connection', function(ws) {
-    console.log('Client connected');
     socket = ws;
-
     ws.on('message', function(message) {
         var data = JSON.parse(message);
         if(data.type === 'cmd') {
