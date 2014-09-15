@@ -68,13 +68,17 @@ $(document).ready(function() {
                     var channel = ActiveChannel();
                     send.cmd = 'NAMES ' + channel;
                     break;
-
                 case "/leave" :
                     var channel = ActiveChannel();
                     if(channel != 'console') {
                         send.cmd = 'PART ' + channel;
                         removeChannelTab(channel);
                     }
+                    break;
+                case "/nick" :
+                    var newNick = /\s.*/.exec(msg.toString())[0].substring(1);
+                    send.cmd = 'NICK ' + newNick;
+                    console.log(send);
                     break;
                 default: 
                     break;
