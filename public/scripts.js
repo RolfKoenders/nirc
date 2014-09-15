@@ -1,6 +1,15 @@
 
 $(document).ready(function() {
 
+    var connectionOptions = {
+        host: 'irc.freenode.net',
+        port: '6665',
+        nick: 'RolfTest',
+        realname: 'Rolf',
+        ident: 'rolf'
+    };
+
+    var ownNickname = connectionOptions.nick;
     var connectedToServer = false;
 
     var sendButton = $("#send-btn");
@@ -18,8 +27,10 @@ $(document).ready(function() {
         var data = JSON.parse(event.data);
         if (event.type === 'message') {
             // For now, always put everything in console window
-            consoleWindow.append("<li>" + data.message + "</li>");
-            consoleWindow.scrollTop(consoleWindow[0].scrollHeight);
+            if(data.message) {
+                consoleWindow.append("<li>" + data.message + "</li>");
+                consoleWindow.scrollTop(consoleWindow[0].scrollHeight);
+            }
             readMessage(event.data);
         }
     };
@@ -32,8 +43,19 @@ $(document).ready(function() {
 
     function readMessage(data) {
         var data = JSON.parse(data);
-        if(data.command === 'PRIVMSG') {
-            addMessageToTab(data.msg);
+
+        if(data.command) {
+            switch(data.command) {
+                case 'JOIN' :
+                case 'PART' :
+                    modifyUserList(data.cname, data.user, data.type);
+                    break;
+                case 'PRIVMSG' :
+                    addMessageToTab(data.msg);
+                    break;
+                default :
+                    break;
+            }
         }
 
         if(data.channel) {
@@ -42,6 +64,20 @@ $(document).ready(function() {
             data.channel.users.forEach(function(user) {
                 userList.append('<li>' + user + '</li>');
             });
+        }
+    }
+
+    function modifyUserList(channel, user, type) {
+        type = type.substring(1); // Strip whitespace
+        var list = $(channel + ' > .users');
+        if(type === 'JOIN') {
+            if(user !== ownNickname) {
+                list.append('<li>'+user+'</li>');
+            }
+        }
+
+        if(type === 'PART') {
+            list.find('li:contains("'+user+'")').remove();
         }
     }
 
@@ -141,12 +177,12 @@ $(document).ready(function() {
         }
     });
  
-    connectButton.click(function() {
+    connectButton.click(function() { 
         socket.send(JSON.stringify({
             type: 'cmd',
-            cmd: 'connect'
+            cmd: 'connect',
+            connection: connectionOptions
         }));
-       
         // For now this is enough. Later we need to check if actually connected.
         connectedToServer = true;
     });

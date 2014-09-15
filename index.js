@@ -12,13 +12,7 @@ var socket = null;
 
 // Setup IRC connection and connet
 var IRCConnection = require('nirc-lib').Connection;
-var con = new IRCConnection({
-    host: 'irc.freenode.net',
-    port: '6665',
-    nick: 'RolfTest',
-    realname: 'Rolf',
-    ident: 'rolf'
-});
+var con = new IRCConnection();
 
 // NIRC-Lib events
 con.on('connected', function(data) {
@@ -44,7 +38,7 @@ ws.on('connection', function(ws) {
         var data = JSON.parse(message);
         if(data.cmd) {
             if(data.cmd === 'connect') {
-                con.connect();
+                con.connect(data.connection);
                 return;
             }
 
