@@ -8,5 +8,7 @@ This todo list is mostly for myself to keep track of what im doing. <br/> Next t
 - [ ] Able to connect to server through frontend (instead of always use the prototype for connecting)
 - [ ] Structure project files. (Using nirc-lib, WebSocket and node-static through eachother in one file is a mess.
 - [ ] Think about a theme system with Handlebars. (Just like Ghost. You can create your own theme for the frontend.
-
+- [X] Show user list
+- [ ] Change user list when users JOIN, PART(leave)
+- [ ] Use Desktop Notifications when user is mentioned or on server NOTICE.
 ***This list will be frequently updated***
