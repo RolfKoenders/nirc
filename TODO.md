@@ -11,4 +11,5 @@ This todo list is mostly for myself to keep track of what im doing. <br/> Next t
 - [X] Show user list
 - [ ] Change user list when users JOIN, PART(leave)
 - [ ] Use Desktop Notifications when user is mentioned or on server NOTICE.
+
 ***This list will be frequently updated***
