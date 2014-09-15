@@ -35,6 +35,14 @@ $(document).ready(function() {
         if(data.command === 'PRIVMSG') {
             addMessageToTab(data.msg);
         }
+
+        if(data.channel) {
+            var channel = data.channel.cname;
+            var userList = $(channel).find('.users');
+            data.channel.users.forEach(function(user) {
+                userList.append('<li>' + user + '</li>');
+            });
+        }
     }
 
     function send() {
@@ -103,7 +111,7 @@ $(document).ready(function() {
         var tabPanes = $('.tab-content');
 
         tabs.append('<li class=""><a href="'+channel+'" role="tab" data-toggle="tab">'+channel+'</a></li>'); 
-        tabPanes.append('<div class="tab-pane" id="'+channel.substring(1)+'"> <ul class="messages" id="'+channel+'-messages"></ul>'); 
+        tabPanes.append('<div class="tab-pane" id="'+channel.substring(1)+'"> <ul class="messages user-list" id="'+channel+'-messages"></ul> <ul class="users"></ul>'); 
     }
 
     function ActiveChannel() {
