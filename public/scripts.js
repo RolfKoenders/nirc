@@ -75,6 +75,11 @@ $(document).ready(function() {
                         removeChannelTab(channel);
                     }
                     break;
+                case "/quit" :
+                    var quitMessage = /\s.*/.exec(msg.toString()[0].substring(1));
+                    send.type = 'QUIT';
+                    send.cmd = 'QUIT' + (quitMessage ? quitmessage : '');
+                    break;
                 case "/nick" :
                     var newNick = /\s.*/.exec(msg.toString())[0].substring(1);
                     send.cmd = 'NICK ' + newNick;

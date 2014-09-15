@@ -24,6 +24,13 @@ var con = new IRCConnection({
 con.on('connected', function(data) {
 });
 
+con.on('disconnect', function(data) {
+    // When support for multi server we know 
+    // which server is disconnected. Use that info to push to the client
+    data.type = 'QUIT';
+    socket.send(JSON.stringify(data));
+});
+
 con.on('data', function(data) {
     if(socket) {
         socket.send(JSON.stringify(data));    
