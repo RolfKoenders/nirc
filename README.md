@@ -12,4 +12,26 @@ Im planning to create the following features.
 * User list
 * Private message to users
 
-### [Todo list](https://github.com/RolfKoenders/nirc/blob/master/TODO.md)
+## Running
+For now all the UI (index page, CSS, Javascript) is prototype code. Just to have something working and play with the library. 
+
+To run it
+```
+git clone git@github.com:RolfKoenders/nirc.git
+npm install
+npm start
+```
+
+For now an extra step is necessary. The library [nirc-lib](https://github.com/RolfKoenders/nirc-lib) is not in the NPM registry at the moment. You need to clone also the library and 'npm link' it together.
+```
+git clone git@github.com:RolfKoenders/nirc-lib.git
+npm install
+npm link
+
+cd ~/path/to/nirc
+npm link nirc-lib
+npm start
+```
+
+## [Todo list](https://github.com/RolfKoenders/nirc/blob/master/TODO.md)
+This list shows what im working on at the moment. 
