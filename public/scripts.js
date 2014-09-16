@@ -61,7 +61,8 @@ $(document).ready(function() {
         if(data.channel) {
             var channel = data.channel.cname;
             var userList = $(channel).find('.users');
-            data.channel.users.forEach(function(user) {
+            var sorted = data.channel.users.sort();
+            sorted.forEach(function(user) {
                 userList.append('<li>' + user + '</li>');
             });
         }
@@ -79,6 +80,10 @@ $(document).ready(function() {
         if(type === 'PART') {
             list.find('li:contains("'+user+'")').remove();
         }
+
+        list.children('li').sort(function(a, b) {
+            return ($(b).text()) < ($(a).text()) ? 1 : -1;
+        }).appendTo(list);
     }
 
     function send() {
