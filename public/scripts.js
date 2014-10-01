@@ -104,6 +104,7 @@ $(document).ready(function() {
                     send.type = 'JOIN';
                     send.cmd = 'JOIN ' + result[2] + ' ' + (result[3] ? result[3] : '');
                     addChannelTab(result[2]);
+                    setActiveChannel(result[2]);
                     break;
                 case "/names" :
                     var channel = ActiveChannel();
@@ -167,6 +168,11 @@ $(document).ready(function() {
     function ActiveChannel() {
         var activeChannel = $('.nav-tabs').find('.active').children('a').text();
         return activeChannel;
+    }
+
+    function setActiveChannel(id) {
+        $('.nav-tabs').children('li.active').removeClass('active');
+        $(id).addClass('active');
     }
 
     sendButton.click(function() {
