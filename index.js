@@ -51,7 +51,7 @@ ws.on('connection', function(ws) {
 });
 
 // Server static assets (frontend app)
-var publicFolder = new nstatic.Server('./public');
+var publicFolder = new nstatic.Server('./dist');
 http.createServer(function(request, response) {
     request.addListener('end', function() {
         publicFolder.serve(request, response);
