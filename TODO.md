@@ -2,6 +2,7 @@
 This todo list is mostly for myself to keep track of what im doing. <br/> Next to that you can see what is in the current version ;)
 
 - [ ] Project setup (Front & Backend setup, Build tool)
+- [X] Frontend structure & build tool
 - [X] Connect to network (prototype)
 - [X] Stream messages to frontend app (prototype)
 - [X] Create first layouts (To have something to work with)
