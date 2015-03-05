@@ -202,3 +202,43 @@ body,
 .navbar-form .has-feedback .form-control-feedback {
   top: 0;
 }
+
+.message_container {
+  background: lightgray;
+  height: 800px;
+  overflow-y: scroll;
+}
+
+
+.line {
+  margin: 5px 10px 5px 10px;
+  width: auto;
+  height: auto;
+  float: left;
+}
+
+.line:first-child {
+  margin-top: 10px;
+}
+
+.timestamp {
+  float: left;
+}
+
+.author {
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.message {
+  margin-left: 5px;
+}
+
+.send_row {
+  background: lightgray;
+}
+
+.send_row > .input-group {
+  padding: 10px;
+}
