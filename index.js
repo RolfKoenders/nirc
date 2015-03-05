@@ -27,7 +27,7 @@ con.on('disconnect', function(data) {
 
 con.on('data', function(data) {
     if(socket) {
-        socket.send(JSON.stringify(data));    
+        socket.send('message', JSON.stringify(data));
     }
 });
 
@@ -35,7 +35,9 @@ con.on('data', function(data) {
 ws.on('connection', function(ws) {
     socket = ws;
     ws.on('message', function(message) {
-        var data = JSON.parse(message);
+        var messageData = JSON.parse(message);
+        var data = messageData.data;
+
         if(data.cmd) {
             if(data.cmd === 'connect') {
                 con.connect(data.connection);
